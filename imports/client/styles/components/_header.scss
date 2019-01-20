@@ -1,0 +1,16 @@
+.header {
+  background: $header-bg;
+  color: $header-color;
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  max-width: $site-max-width;
+  margin: 0 auto; // will center the div
+  padding: $space;
+}
+
+.header__title {
+  margin: 0;// reset h1 margin default values
+}
