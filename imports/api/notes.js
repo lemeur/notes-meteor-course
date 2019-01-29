@@ -3,8 +3,14 @@ import {Meteor} from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import moment from 'moment';
 
-
 export const Notes = new Mongo.Collection('notes');
+
+if (Meteor.isServer) {
+  Meteor.publish('notes', function() {
+    //return Notes.find({});
+    return Notes.find({userId: this.userId});
+  })
+}
 
 Meteor.methods({
   'notes.insert'() {
