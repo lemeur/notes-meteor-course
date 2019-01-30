@@ -24,3 +24,4 @@ accounts-password@1.5.1
 session@1.2.0
 fourseven:scss@=3.13.0
 meteortesting:mocha
+react-meteor-data@=0.2.9
