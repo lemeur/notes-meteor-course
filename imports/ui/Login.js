@@ -1,8 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router';
 import { Meteor } from 'meteor/meteor';
+import {createContainer} from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 
-export default class Login extends React.Component {
+
+export class Login extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -20,7 +23,7 @@ export default class Login extends React.Component {
       this.setState({error: 'password should not be empty'});
     }
     else {
-      Meteor.loginWithPassword({email}, password, (err) => {
+      this.props.loginWithPassword({email}, password, (err) => {
         //console.log('Login Callback',err);
         if (err) {
           //this.setState({error: err.reason});
@@ -49,3 +52,15 @@ export default class Login extends React.Component {
       );
   }
 }
+
+Login.propTypes = {
+  loginWithPassword: PropTypes.func.isRequired
+}
+
+export default createContainer( () => {
+  // a reactive function (like a tracker autorun)
+  return {
+    loginWithPassword: Meteor.loginWithPassword,
+  }
+},
+Login);
