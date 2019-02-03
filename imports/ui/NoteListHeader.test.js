@@ -15,7 +15,5 @@ if (Meteor.isClient) {
         expect(spy).toHaveBeenCalledWith('notes.insert');
       });
 
-
-
     });
 }

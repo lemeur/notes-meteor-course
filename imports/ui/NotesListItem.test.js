@@ -3,8 +3,6 @@ import expect from 'expect';
 import {mount} from 'enzyme';
 import {Meteor} from 'meteor/meteor';
 
-import moment from 'moment';
-
 import NoteListItem from './NoteListItem';
 
 if (Meteor.isClient) {

@@ -7,11 +7,19 @@ import {Notes} from '../api/notes';
 import NoteListHeader from './NoteListHeader';
 import NoteListItem from './NoteListItem';
 
+import NoteListEmptyItem from './NoteListEmptyItem';
+
+
 export const NoteList = (props) => {
   renderNoteListItems = function() {
-      return props.notes.map( (note) => {
-        return <NoteListItem key={note._id} note={note} />;
-    });
+      if (props.notes.length > 0) {
+        return props.notes.map( (note) => {
+          return <NoteListItem key={note._id} note={note} />;
+        });
+      } else {
+        return <NoteListEmptyItem />;
+      }
+
   }
   return (
     <div>
