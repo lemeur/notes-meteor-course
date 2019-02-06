@@ -9,6 +9,7 @@ export const NoteListItem =  (props) => {
   return (
     <div onClick={() => {props.Session.set('selectedNoteId', props.note._id)} } >
       <h5>{props.note.title || 'Untitled note'}</h5>
+      { props.note.selected? 'selected':undefined }
       <p>{moment(props.note.updatedAt).format('DD/MM/YYYY')}</p>
     </div>
   );
@@ -16,11 +17,13 @@ export const NoteListItem =  (props) => {
 
 NoteListItem.propTypes = {
   note: PropTypes.object.isRequired,
-  Session: PropTypes.object.isRequired
+  Session: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired
 };
 
 export default createContainer(() => {
   return {
-    Session
+    Session,
+    selected: false
   }
 },  NoteListItem);
