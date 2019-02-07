@@ -1,4 +1,5 @@
 import React from 'react';
+import {Meteor} from 'meteor/meteor';
 import {Session} from 'meteor/session';
 import {createContainer} from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -13,11 +14,26 @@ export class Editor extends React.Component {
       error: ''
     }
   }
-
+  handleOnChangeBody(e) {
+    const element = e.target;
+    this.props.call('notes.update', this.props.note._id, {
+      body: e.target.value
+    });
+  }
+  handleOnChangeTitle(e) {
+    const element = e.target;
+    this.props.call('notes.update', this.props.note._id, {
+      title: e.target.value
+    });
+  }
   render() {
     if (this.props.note) {
       return (
-        <p>Got the note</p>
+        <div>
+          <input value={this.props.note.title} onChange={this.handleOnChangeTitle.bind(this)}/>
+          <textarea value={this.props.note.body} placeholder="Your note here" onChange={this.handleOnChangeBody.bind(this)}></textarea>
+          <button>Delete note</button>
+        </div>
       );
     } else {
       return (
@@ -38,7 +54,8 @@ export default createContainer( () => {
 
   return {
       selectedNoteId,
-      note: Notes.findOne({_id: selectedNoteId})
+      note: Notes.findOne({_id: selectedNoteId}),
+      call: Meteor.call
   }
 },
 Editor);
