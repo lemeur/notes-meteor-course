@@ -29,7 +29,6 @@ const onEnterNotePage = (nextState) => {
     Session.set('selectedNoteId', nextState.params.id)
     //console.log(nextState);
   }
-
 }
 
 export const onAuthChange = (isAuthenticated) => {
