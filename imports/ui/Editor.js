@@ -11,28 +11,48 @@ export class Editor extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      error: ''
+      title: '',
+      body: ''
     }
   }
+
   handleOnChangeBody(e) {
-    const element = e.target;
-    this.props.call('notes.update', this.props.note._id, {
-      body: e.target.value
-    });
+    const body = e.target.value;
+    this.props.call('notes.update', this.props.note._id, {body});
+    this.setState({body});
   }
+
   handleOnChangeTitle(e) {
-    const element = e.target;
-    this.props.call('notes.update', this.props.note._id, {
-      title: e.target.value
-    });
+    const title = e.target.value
+    this.props.call('notes.update', this.props.note._id, {title});
+    this.setState({title});
   }
+
+  handleDeleteNote(e) {
+      this.props.call('notes.remove', this.props.note._id);
+      Session.set('selectedNoteId', undefined);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+      // Watch changes in this.props.note
+      const currentNoteId = this.props.note?this.props.note._id:undefined;
+      const prevNoteId = prevProps.note?prevProps.note._id:undefined;
+      // If the noteId changed, we reload the State
+      if (currentNoteId && currentNoteId !== prevNoteId) {
+        this.setState({
+          title: this.props.note.title,
+          body: this.props.note.body
+        });
+      }
+  }
+
   render() {
     if (this.props.note) {
       return (
         <div>
-          <input value={this.props.note.title} onChange={this.handleOnChangeTitle.bind(this)}/>
-          <textarea value={this.props.note.body} placeholder="Your note here" onChange={this.handleOnChangeBody.bind(this)}></textarea>
-          <button>Delete note</button>
+          <input value={this.state.title} onChange={this.handleOnChangeTitle.bind(this)}/>
+          <textarea value={this.state.body} placeholder="Your note here" onChange={this.handleOnChangeBody.bind(this)}></textarea>
+          <button onClick={this.handleDeleteNote.bind(this)}>Delete note</button>
         </div>
       );
     } else {

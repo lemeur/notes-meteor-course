@@ -21,6 +21,8 @@ Tracker.autorun( () => {
 
   if (selectedNoteId) {
     browserHistory.replace(`/dashboard/${selectedNoteId}`);
+  } else {
+    browserHistory.replace(`/dashboard`);
   }
 });
 
