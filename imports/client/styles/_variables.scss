@@ -1,8 +1,12 @@
 // Colors
 $grey: #dddddd;
-$brand-primary: #5b4681; //primary color for app, here purple
+$brand-primary: #397ab1; //primary color for app, here purple
 $light-grey: #f9f9f9;
 $dark-grey: #777777;
+
+// Body
+$body-background-color: #fafafa;
+$body-default-color: #333333;
 
 // Spacing, sizes
 $space: 1.4rem;
@@ -19,6 +23,7 @@ $input-spacing: 1rem;
 // Boxed view
 $boxed-view-overlay-bg: $grey;
 $boxed-view-bg: white;
+$boxed-view-border-color: $grey;
 
 // Button
 $button-bg: $brand-primary;
