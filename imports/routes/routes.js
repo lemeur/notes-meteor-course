@@ -12,14 +12,21 @@ import Login from './../ui/Login';
 const onEnterNotePage = (nextState) => {
   Session.set('selectedNoteId', nextState.params.id);
 }
-const onLeaveNotePage = () => {
-    Session.set('selectedNoteId', undefined);
+const onLeaveNotePage = (prevState) => {
+  const newId = Session.get('selectedNoteId');
+  if (newId && newId !== prevState.params.id) {
+    //console.log('Just changing note');
+  } else {
+      Session.set('selectedNoteId', undefined);
+  }
+
 }
 
 export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
   const isUnauthenticatedPage = currentPagePrivacy === 'unauth';
   const isAuthenticatedPage = currentPagePrivacy === 'auth';
   if (isUnauthenticatedPage && isAuthenticated) {
+    debugger;
     browserHistory.replace('/dashboard');
   }
   else if (isAuthenticatedPage && !isAuthenticated) {
@@ -28,7 +35,6 @@ export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
 }
 
 export const globalOnChange = (previousState, nextState) => {
-  //debugger;
   globalOnEnter(nextState)
 }
 export const globalOnEnter = (nextState) => {
@@ -41,7 +47,7 @@ export const routes = (
       <Route path="/" component={Login} privacy="unauth"/>
       <Route path="/signup" component={Signup} privacy="unauth"/>
       <Route path="/dashboard" component={Dashboard} privacy="auth"/>
-      <Route path="/dashboard/:id" component={Dashboard} privacy="auth" onLeave={onLeaveNotePage}/>
+      <Route path="/dashboard/:id" component={Dashboard} privacy="auth" oneEnter={onEnterNotePage} onLeave={onLeaveNotePage}/>
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>
