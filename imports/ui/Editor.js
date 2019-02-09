@@ -2,6 +2,8 @@ import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {Session} from 'meteor/session';
 import {createContainer} from 'meteor/react-meteor-data';
+import { browserHistory } from 'react-router';
+
 import PropTypes from 'prop-types';
 
 import {Notes} from '../api/notes';
@@ -31,6 +33,10 @@ export class Editor extends React.Component {
   handleDeleteNote(e) {
       this.props.call('notes.remove', this.props.note._id);
       Session.set('selectedNoteId', undefined);
+      // The following redirect is not necessary with my
+      // modif to client/main.js tracker.autorun
+      // I let it there for the testing of browserhistory
+      this.props.browserHistory.push(`/dashboard`);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -57,7 +63,7 @@ export class Editor extends React.Component {
       );
     } else {
       return (
-        <p>{this.props.selectedNoteId?'Note note found':'Select a note to gest started'}</p>
+        <p>{this.props.selectedNoteId?'Note not found':'Select a note to get started'}</p>
       );
     }
   }
@@ -65,7 +71,9 @@ export class Editor extends React.Component {
 
 Editor.propTypes = {
    selectedNoteId: PropTypes.string,
-   note: PropTypes.object
+   note: PropTypes.object,
+   call: PropTypes.func.isRequired,
+   browserHistory: PropTypes.object.isRequired
 }
 
 export default createContainer( () => {
@@ -75,7 +83,8 @@ export default createContainer( () => {
   return {
       selectedNoteId,
       note: Notes.findOne({_id: selectedNoteId}),
-      call: Meteor.call
+      call: Meteor.call,
+      browserHistory: browserHistory
   }
 },
 Editor);
