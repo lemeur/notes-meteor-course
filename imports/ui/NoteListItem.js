@@ -6,8 +6,11 @@ import {createContainer} from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
 export const NoteListItem =  (props) => {
+  const handleClick = function(e) {
+    props.Session.set('selectedNoteId', props.note._id);
+  }
   return (
-    <div onClick={() => {props.Session.set('selectedNoteId', props.note._id)} } >
+    <div onClick={handleClick.bind(this)}>
       <h5>{props.note.title || 'Untitled note'}</h5>
       { props.note.selected? 'selected':undefined }
       <p>{moment(props.note.updatedAt).format('DD/MM/YYYY')}</p>

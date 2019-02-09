@@ -20,19 +20,20 @@ export class Editor extends React.Component {
 
   handleOnChangeBody(e) {
     const body = e.target.value;
-    this.props.call('notes.update', this.props.note._id, {body});
     this.setState({body});
+    this.props.call('notes.update', this.props.note._id, {body});
+
   }
 
   handleOnChangeTitle(e) {
     const title = e.target.value
-    this.props.call('notes.update', this.props.note._id, {title});
     this.setState({title});
+    this.props.call('notes.update', this.props.note._id, {title});
   }
 
   handleDeleteNote(e) {
       this.props.call('notes.remove', this.props.note._id);
-      Session.set('selectedNoteId', undefined);
+      //Session.set('selectedNoteId', undefined);
       // The following redirect is not necessary with my
       // modif to client/main.js tracker.autorun
       // I let it there for the testing of browserhistory
@@ -55,7 +56,7 @@ export class Editor extends React.Component {
   render() {
     if (this.props.note) {
       return (
-        <div>
+        <div className="editor">
           <input value={this.state.title} onChange={this.handleOnChangeTitle.bind(this)}/>
           <textarea value={this.state.body} placeholder="Your note here" onChange={this.handleOnChangeBody.bind(this)}></textarea>
           <button onClick={this.handleDeleteNote.bind(this)}>Delete note</button>
@@ -63,7 +64,9 @@ export class Editor extends React.Component {
       );
     } else {
       return (
-        <p>{this.props.selectedNoteId?'Note not found':'Select a note to get started'}</p>
+        <div className="editor">
+          <p>{this.props.selectedNoteId?'Note not found':'Select a note to get started'}</p>
+        </div>
       );
     }
   }

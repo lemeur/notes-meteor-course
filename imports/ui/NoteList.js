@@ -23,7 +23,7 @@ export const NoteList = (props) => {
 
   }
   return (
-    <div>
+    <div className="item-list">
     <NoteListHeader />
     {renderNoteListItems()}
     NoteList {props.notes.length}

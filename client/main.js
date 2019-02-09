@@ -18,10 +18,10 @@ Tracker.autorun( () => {
 Tracker.autorun( () => {
   // When selectedNoteId changes, update the URL
   const selectedNoteId = Session.get('selectedNoteId');
-
   if (selectedNoteId) {
     browserHistory.replace(`/dashboard/${selectedNoteId}`);
-  } else {
+  }
+  else {
     browserHistory.replace(`/dashboard`);
   }
 });
