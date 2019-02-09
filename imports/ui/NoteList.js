@@ -36,14 +36,13 @@ NoteList.propTypes = {
 }
 
 export default createContainer( () => {
-    // a reactive function (like a tracker autorun)
     // Reactive to Session.get and Collection subscriptions
   const selectedNoteId = Session.get('selectedNoteId');
 
   Meteor.subscribe('notes');
 
   return {
-    notes: Notes.find().fetch().map((note) => {
+    notes: Notes.find({}, { sort: { updatedAt: -1 } }).fetch().map((note) => {
       return {...note,
              selected: note._id === selectedNoteId
            }
