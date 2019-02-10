@@ -3,19 +3,32 @@
   height: $page-content-height;
   max-width: $site-max-width;
   margin: 0 auto;
-  padding-bottom: $large-space;
-  padding-left: $space;
-  padding-right: $space;
-  padding-top: $large-space;
+
+  @media(min-width: 50rem) {
+    padding-bottom: $large-space;
+    padding-left: $space;
+    padding-right: $space;
+    padding-top: $large-space;
+  }
 }
 
 .page-content__sidebar {
-  display: flex;
+  //display: flex;
+  display: none;
   padding-right: $large-space;
   width: $page-content-sidebar-width;
+
+  @media(min-width: 50rem) {
+    display: flex;
+  }
 }
+
 
 .page-content__main {
   display: flex;
-  width: $page-content-main-width;
+  width: 100%;
+
+  @media(min-width: 50rem) {
+    width: $page-content-main-width;
+  }
 }
