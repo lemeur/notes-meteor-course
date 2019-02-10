@@ -1,10 +1,13 @@
+
+
 .page-content {
   display: flex;
   height: $page-content-height;
   max-width: $site-max-width;
   margin: 0 auto;
 
-  @media(min-width: 50rem) {
+
+  @include desktop {
     padding-bottom: $large-space;
     padding-left: $space;
     padding-right: $space;
@@ -18,7 +21,7 @@
   padding-right: $large-space;
   width: $page-content-sidebar-width;
 
-  @media(min-width: 50rem) {
+  @include desktop {
     display: flex;
   }
 }
@@ -28,7 +31,7 @@
   display: flex;
   width: 100%;
 
-  @media(min-width: 50rem) {
+  @include desktop {
     width: $page-content-main-width;
   }
 }
