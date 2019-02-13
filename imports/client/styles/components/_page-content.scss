@@ -17,24 +17,24 @@
 
 .page-content__sidebar {
   display:flex;
-  transition: left .3s ease;
-  width: 100vw;
+  transition: left .3s ease; // transition the move from outside left to left
+  width: 100vw; // 100% of viewport width
 
-  position: fixed; // this is the overlay
-  top: $header-height; // covers all the screen
-  left: -100vw;
-  bottom: 0;
+  position: fixed; // Force fixed position => Overlay in mobile mode
+  top: $header-height; // let room for the header and Icon to close nav
+  left: -100vw; // hidden on the left when NOT is-nav-open
+  bottom: 0; // down to bottom
 
   @include desktop {
     display: flex;
     padding-right: $large-space;
-    position: static;
+    position: static; // In non mobile version, gets back to static position
     width: $page-content-sidebar-width;
   }
 }
 
 .is-nav-open .page-content__sidebar {
-  left: 0;
+  left: 0; // when is-nav-open, move from far-left to left-side
 }
 
 .page-content__main {
