@@ -18,6 +18,7 @@ Tracker.autorun( () => {
 Tracker.autorun( () => {
   // When selectedNoteId changes, update the URL
   const selectedNoteId = Session.get('selectedNoteId');
+  Session.set('isNavOpen', false);
   if (selectedNoteId) {
     browserHistory.replace(`/dashboard/${selectedNoteId}`);
   }
@@ -26,8 +27,15 @@ Tracker.autorun( () => {
   }
 });
 
+Tracker.autorun( () => {
+  const isNavOpen =  Session.get('isNavOpen');
+  //document.body.classList.add/remove/toggle
+  document.body.classList.toggle('is-nav-open', isNavOpen);
+
+});
 
 Meteor.startup(() => {
   Session.set('selectedNoteId', undefined);
+  Session.set('isNavOpen', false);
   ReactDom.render(routes,document.getElementById('app'));
 });
