@@ -9,14 +9,14 @@ if (Meteor.isClient) {
   describe('PrivateHeader', function() {
     it('should set button text to logout', function() {
       const testTitle= "testTitle";
-      const wrapper = mount(<PrivateHeader title={testTitle} handleLogout={ () => {} }/>);
+      const wrapper = mount(<PrivateHeader title={testTitle} handleLogout={ () => {} } handleNavToggle={ () => {} } isNavOpen={true}/>);
       const buttonText = wrapper.find('button').text();
       expect(buttonText).toBe('Logout');
     });
 
     it('should set Title the prop title value', function() {
       const testTitle= "testTitle";
-      const wrapper = mount(<PrivateHeader title={testTitle} handleLogout={ () => {} }/>);
+      const wrapper = mount(<PrivateHeader title={testTitle} handleLogout={ () => {} } handleNavToggle={ () => {} } isNavOpen={true}/>);
       const buttonText = wrapper.find('h1').text();
       expect(buttonText).toBe(testTitle);
     });
@@ -25,7 +25,7 @@ if (Meteor.isClient) {
       const spy = expect.createSpy();
 
       const testTitle= "testTitle";
-      const wrapper = mount(<PrivateHeader title={testTitle} handleLogout={spy}/>);
+      const wrapper = mount(<PrivateHeader title={testTitle} handleLogout={spy} handleNavToggle={ () => {} } isNavOpen={true}/>);
 
       wrapper.find('button').simulate('click');
       expect(spy).toHaveBeenCalled();
