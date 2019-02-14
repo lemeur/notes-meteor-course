@@ -24,6 +24,7 @@
   top: $header-height; // let room for the header and Icon to close nav
   left: -100vw; // hidden on the left when NOT is-nav-open
   bottom: 0; // down to bottom
+  z-index: 1; // for sidebor on top
 
   @include desktop {
     display: flex;
