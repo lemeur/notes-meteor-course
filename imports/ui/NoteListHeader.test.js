@@ -37,8 +37,9 @@ if (Meteor.isClient) {
 
         expect(meteorCall.calls[0].arguments[0]).toBe('notes.insert');
         meteorCall.calls[0].arguments[1]({error: 'there was an error'}, undefined);
-
-        expect(Session.set).toNotHaveBeenCalled();
+        //debugger;
+        expect(Session.set.calls[0].arguments[0]).toBe('noteFilter');
+        expect(Session.set.calls.length).toBe(1);
       });
 
     });

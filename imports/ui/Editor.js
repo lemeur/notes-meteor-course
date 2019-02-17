@@ -1,7 +1,9 @@
-import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {Session} from 'meteor/session';
 import {createContainer} from 'meteor/react-meteor-data';
+
+import React from 'react';
+import Modal from 'react-modal';
 import { browserHistory } from 'react-router';
 
 import PropTypes from 'prop-types';
@@ -14,7 +16,8 @@ export class Editor extends React.Component {
     super(props);
     this.state = {
       title: '',
-      body: ''
+      body: '',
+      modalIsOpen: false
     }
   }
 
@@ -33,10 +36,6 @@ export class Editor extends React.Component {
 
   handleDeleteNote(e) {
       this.props.call('notes.remove', this.props.note._id);
-      //Session.set('selectedNoteId', undefined);
-      // The following redirect is not necessary with my
-      // modif to client/main.js tracker.autorun
-      // I let it there for the testing of browserhistory
       this.props.browserHistory.push(`/dashboard`);
   }
 
@@ -52,7 +51,12 @@ export class Editor extends React.Component {
         });
       }
   }
-
+  componentWillMount() {
+          Modal.setAppElement(this.props.modalRootElement);
+  }
+  stopPropagation(event) {
+   event.stopPropagation();
+  }
   render() {
     if (this.props.note) {
       return (
@@ -60,8 +64,23 @@ export class Editor extends React.Component {
           <input className="editor__title" value={this.state.title} onChange={this.handleOnChangeTitle.bind(this)} placeholder="Your title here"/>
           <textarea className="editor__body" value={this.state.body} placeholder="Your note here" onChange={this.handleOnChangeBody.bind(this)}></textarea>
           <div>
-            <button className="button button--secondary" onClick={this.handleDeleteNote.bind(this)}>Delete note</button>
+            <button id="intentDelete" className="button button--secondary" onClick={this.props.handleModalOpen.bind(this)}>Delete note</button>
           </div>
+
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            contentLabel="DeleteNote"
+            className="boxed-view__box"
+            onRequestClose={this.stopPropagation.bind(this)}
+            overlayClassName="boxed-view boxed-view__modal">
+            <h1>Do you really want to delete the note ?</h1>
+            <form className="boxed-view__form">
+              <button id="confirmDelete" className="button" onClick={this.handleDeleteNote.bind(this)}>Delete</button>
+              <button type="button" className="button button--secondary" onClick={this.props.handleModalClose.bind(this)}>Cancel</button>
+            </form>
+          </Modal>
+
+
         </div>
       );
     } else {
@@ -78,7 +97,10 @@ Editor.propTypes = {
    selectedNoteId: PropTypes.string,
    note: PropTypes.object,
    call: PropTypes.func.isRequired,
-   browserHistory: PropTypes.object.isRequired
+   browserHistory: PropTypes.object.isRequired,
+   handleModalOpen: PropTypes.func.isRequired,
+   handleModalClose: PropTypes.func.isRequired,
+   modalRootElement: PropTypes.string.isRequired
 }
 
 export default createContainer( () => {
@@ -89,7 +111,22 @@ export default createContainer( () => {
       selectedNoteId,
       note: Notes.findOne({_id: selectedNoteId}),
       call: Meteor.call,
-      browserHistory: browserHistory
+      browserHistory: browserHistory,
+      handleModalOpen: function() {
+        this.setState(
+          {
+            ...this.state,
+            modalIsOpen: true,
+          });
+      },
+      handleModalClose: function() {
+        this.setState(
+          {
+            ...this.state,
+            modalIsOpen: false,
+          });
+      },
+      modalRootElement: 'body'
   }
 },
 Editor);

@@ -26,7 +26,7 @@ export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
   const isUnauthenticatedPage = currentPagePrivacy === 'unauth';
   const isAuthenticatedPage = currentPagePrivacy === 'auth';
   if (isUnauthenticatedPage && isAuthenticated) {
-    debugger;
+    //debugger;
     browserHistory.replace('/dashboard');
   }
   else if (isAuthenticatedPage && !isAuthenticated) {
